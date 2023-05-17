@@ -83,8 +83,8 @@ class CRM_Agendabe_Generator {
   private static function printEventMedias($dao) {
     $imgUrl = '';
 
-    if ($dao->afbeelding_48) {
-      $imgUrl = self::getUrlFromFileId($dao->afbeelding_48);
+    if ($dao->image_id) {
+      $imgUrl = self::getUrlFromFileId($dao->image_id);
     }
     else {
       // try image in the body
