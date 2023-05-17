@@ -283,7 +283,7 @@ class CRM_Agendabe_Generator {
         place.postal_code AS PlaceZip,
         place.city AS PlaceCity,
         d.taal,
-        d.afbeelding_48 image_id
+        d.afbeelding_48 image_id,
         e.id AS locblockid,
         e.address_id,
         a.summary,
