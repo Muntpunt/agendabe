@@ -39,12 +39,12 @@ class CRM_Agendabe_Generator {
   private static function printEventCategory($dao) {
 	  if ($dao->label == "Nederlands oefenen"){
 		print "<category>Workshop</category>";
-	  }else{	
+	  }else{
 		  print "<category>$dao->label</category>";
 	  }
     }
 
-  
+
   private static function printEventDetail($dao) {
     print "<detail language='NL'>";
     print str_replace("&", "&amp;","<title>$dao->title</title>");
@@ -81,14 +81,39 @@ class CRM_Agendabe_Generator {
   }
 
   private static function printEventMedias($dao) {
-    preg_match('/< *img[^>]*src *= *["\']?([^"\']*)/i', $dao->description, $img);
-    if (!empty($img[1])) {
+    $imgUrl = '';
+
+    if ($dao->afbeelding_48) {
+      $imgUrl = self::getUrlFromFileId($dao->afbeelding_48);
+    }
+    else {
+      // try image in the body
+      preg_match('/< *img[^>]*src *= *["\']?([^"\']*)/i', $dao->description, $img);
+      if (!empty($img[1])) {
+        $imgUrl = $img[1];
+      }
+    }
+
+    if ($imgUrl) {
       print "<medias>";
       print "<media type='photo'>";
-      print "<url>" . $img[1] . "</url>";
+      print "<url>$imgUrl</url>";
       print "</media>";
       print "</medias>";
     }
+  }
+
+  static private function getUrlFromFileId($fileId) {
+    $file = \Civi\Api4\File::get(FALSE)
+      ->addWhere('id', '=', $fileId)
+      ->execute()
+      ->first();
+
+    if ($file) {
+      return \CRM_Utils_System::url('sites/default/files/civicrm/custom/' . $file['uri'], NULL, TRUE);
+    }
+
+    return '';
   }
 
   private static function printEventOrganizer($dao) {
@@ -173,7 +198,7 @@ class CRM_Agendabe_Generator {
 	print "<type>Jongeren vanaf 12 jaar (12+)</type>";
 	print "<type>Jongeren vanaf 15 jaar (15+)</type>";
       }
-    }  
+    }
 
     foreach ($targetAges as $targetAge) {
       if (!empty($targetAge)) {
@@ -258,6 +283,7 @@ class CRM_Agendabe_Generator {
         place.postal_code AS PlaceZip,
         place.city AS PlaceCity,
         d.taal,
+        d.afbeelding_48 image_id
         e.id AS locblockid,
         e.address_id,
         a.summary,
