@@ -182,37 +182,17 @@ class CRM_Agendabe_Generator {
 
   private static function printEventTargetAudience($dao) {
     $targetAudiences = explode(CRM_Core_DAO::VALUE_SEPARATOR, $dao->doelgroep);
-    $targetAges = explode(CRM_Core_DAO::VALUE_SEPARATOR, $dao->leeftijd_41);
+    
 
     print "<target_audience>";
     foreach ($targetAudiences as $targetAudience) {
-
-	      if (!empty($targetAudience) && $targetAudience != 'Kinderen') {
+      if (!empty($targetAudience)){ 
         print "<type>$targetAudience</type>";
-      }
-      if($targetAudience == 'Kinderen' && empty($dao->leeftijd_41)){
-	print "<type>Kinderen vanaf peuterleeftijd (0+)</type>";
-	print "<type>Kinderen vanaf peuterleeftijd (3+)</type>";
-	print "<type>Kinderen vanaf lagerschoolleeftijd (6+)</type>";
-	print "<type>Kinderen vanaf 9 jaar (9+)</type>";
-	print "<type>Jongeren vanaf 12 jaar (12+)</type>";
-	print "<type>Jongeren vanaf 15 jaar (15+)</type>";
-      }
-    }
-
-    foreach ($targetAges as $targetAge) {
-      if (!empty($targetAge)) {
-        if ($targetAge == 'Volwassen' && in_array('Volwassen', $targetAudiences)) {
-          // avoid double entry
-        }
-        else {
-          print "<type>$targetAge</type>";
-        }
       }
     }
 
     print "</target_audience>";
-  }
+    }
 
   private static function printEventTaalIcon($dao) {
     $targetLanguageLevels = explode(CRM_Core_DAO::VALUE_SEPARATOR, $dao->taalniveau_42);
