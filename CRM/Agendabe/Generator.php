@@ -143,9 +143,9 @@ class CRM_Agendabe_Generator {
     print "<place>";
     print "<id>$dao->PlaceID</id>";
     if(!empty($zalen)){
-        print "<name>$plaatsnaam, $zalen</name>";
+        print str_replace("&", "&amp;","<name>$plaatsnaam, $zalen</name>");
     }else{
-        print "<name>$plaatsnaam</name>";
+        print str_replace("&", "&amp;","<name>$plaatsnaam</name>");
     }
     print "<street>$dao->PlaceStreet</street>";
     print "<zip>$dao->PlaceZip</zip>";
