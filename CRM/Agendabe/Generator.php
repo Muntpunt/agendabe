@@ -182,11 +182,11 @@ class CRM_Agendabe_Generator {
 
   private static function printEventTargetAudience($dao) {
     $targetAudiences = explode(CRM_Core_DAO::VALUE_SEPARATOR, $dao->doelgroep);
-    
+
 
     print "<target_audience>";
     foreach ($targetAudiences as $targetAudience) {
-      if (!empty($targetAudience)){ 
+      if (!empty($targetAudience)){
         print "<type>$targetAudience</type>";
       }
     }
@@ -252,11 +252,11 @@ class CRM_Agendabe_Generator {
         d.doelgroep,
         d.leeftijd_41,
         d.taalniveau_42,
-        organizer.id AS OrganizerID,
-        organizer.organization_name AS OrganizerName,
-        organizeraddress.street_address AS OrganizerStreet,
-        organizeraddress.postal_code AS OrganizerZip,
-        organizeraddress.city AS OrganizerCity,
+        3 AS OrganizerID,
+        'Muntpunt' AS OrganizerName,
+        'Munt 6' AS OrganizerStreet,
+        1000 AS OrganizerZip,
+        'Brussel' AS OrganizerCity,
         place.id AS PlaceID,
         place.name AS PlaceName,
         place.street_address AS PlaceStreet,
@@ -279,12 +279,6 @@ class CRM_Agendabe_Generator {
         a.event_type_id = c.value
       LEFT JOIN civicrm_value_extra_evenement_info d ON
         a.id = d.entity_id
-      LEFT JOIN civicrm_participant organizer_participant ON
-        a.id = organizer_participant.event_id and organizer_participant.role_id like '%$participantRoleOrganizer%'
-      LEFT JOIN civicrm_contact organizer ON
-        organizer.id = organizer_participant.contact_id
-      LEFT JOIN civicrm_address organizeraddress ON
-        organizer.id = organizeraddress.contact_id and organizeraddress.is_primary = 1
       LEFT JOIN civicrm_loc_block e ON
         a.loc_block_id = e.id
       LEFT JOIN civicrm_address place ON
