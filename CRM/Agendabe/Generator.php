@@ -252,7 +252,7 @@ class CRM_Agendabe_Generator {
         d.doelgroep,
         d.leeftijd_41,
         d.taalniveau_42,
-        3 AS OrganizerID,
+        1 AS OrganizerID,
         'Muntpunt' AS OrganizerName,
         'Munt 6' AS OrganizerStreet,
         1000 AS OrganizerZip,
